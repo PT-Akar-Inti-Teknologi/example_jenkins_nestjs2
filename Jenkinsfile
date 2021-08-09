@@ -11,7 +11,7 @@ pipeline {
 
     stage('Test') {
       when {
-        branch 'development'
+        branch 'staging'
       }
       steps {
          sh 'npm test'
@@ -20,7 +20,7 @@ pipeline {
 
     stage('Test Cov') {
       when {
-        branch 'development'
+        branch 'staging'
       }
       steps {
          sh 'npm run test:cov'
