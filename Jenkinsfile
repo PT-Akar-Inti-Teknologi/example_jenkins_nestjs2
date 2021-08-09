@@ -10,12 +10,18 @@ pipeline {
     }
 
     stage('Test') {
+      when {
+        branch 'development'
+      }
       steps {
          sh 'npm test'
       }
     }
 
     stage('Test Cov') {
+      when {
+        branch 'development'
+      }
       steps {
          sh 'npm run test:cov'
       }
