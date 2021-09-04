@@ -16,17 +16,29 @@ pipeline {
       }
     }
 
-    stage('Sonarqube') {
-      environment {
-        scannerHome = tool 'sonarqube-scanner'
-      }
-
-      steps {
-        withSonarQubeEnv(installationName: 'sonarqube') {
-          sh "${scannerHome}/bin/sonar-scanner"
-        }
+  stage('Sonarqube docker') {
+    agent {
+      docker {
+        image 'newtmitch/sonar-scanner'
+        reuseNode true
       }
     }
+    steps {
+      sh "/usr/local/bin/sonar-scanner -Dsonar.host.url=http://192.168.1.20:9001 -Dsonar.sources=."
+    }
+  }
+
+    // stage('Sonarqube') {
+    //   environment {
+    //     scannerHome = tool 'sonarqube-scanner'
+    //   }
+
+    //   steps {
+    //     withSonarQubeEnv(installationName: 'sonarqube') {
+    //       sh "${scannerHome}/bin/sonar-scanner"
+    //     }
+    //   }
+    // }
 
 //     stage('Sonarqube') {
 //       environment {
