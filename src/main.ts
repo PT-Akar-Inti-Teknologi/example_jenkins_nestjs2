@@ -18,7 +18,12 @@ async function bootstrap() {
   // app.setGlobalPrefix('/api');
 
   await app.listen(configService.get('http.port') || 3000, () => {
-    logger.log(`Server running on http://${configService.get('http.host')}:${configService.get('http.port')}`, 'NestApplication');
+    logger.log(
+      `Server running on http://${configService.get(
+        'http.host',
+      )}:${configService.get('http.port')}`,
+      'NestApplication',
+    );
   });
 }
 bootstrap();

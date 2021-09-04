@@ -1,11 +1,14 @@
 import { Controller, Get } from '@nestjs/common';
-import { AppService } from 'src/app/app.service';
-import { ResponseService } from 'src/response/response.service';
-import { Response, ResponseStatusCode } from 'src/response/response.decorator';
-import { IResponse } from 'src/response/response.interface';
+import { AppService } from './app.service';
+import { ResponseService } from '../response/response.service';
+import { Response, ResponseStatusCode } from '../response/response.decorator';
+import { IResponse } from '../response/response.interface';
 @Controller('/')
 export class AppController {
-  constructor(@Response() private readonly responseService: ResponseService, private readonly appService: AppService) {}
+  constructor(
+    @Response() private readonly responseService: ResponseService,
+    private readonly appService: AppService,
+  ) {}
 
   @ResponseStatusCode()
   @Get('/hello')

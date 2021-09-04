@@ -21,7 +21,8 @@ import Configuration from 'src/config/configuration';
     WinstonModule.forRootAsync({
       inject: [LoggerService],
       imports: [LoggerModule],
-      useFactory: (loggerService: LoggerService) => loggerService.createLogger(),
+      useFactory: (loggerService: LoggerService) =>
+        loggerService.createLogger(),
     }),
     LoggerModule,
     ResponseModule,

@@ -17,7 +17,10 @@ export class ResponseService {
     };
   }
 
-  success(message: string, data?: Record<string, any> | Record<string, any>[]): IResponse {
+  success(
+    message: string,
+    data?: Record<string, any> | Record<string, any>[],
+  ): IResponse {
     if (data) {
       return {
         message: message,
@@ -30,7 +33,14 @@ export class ResponseService {
     };
   }
 
-  paging(message: string, totalData: number, totalPage: number, currentPage: number, perPage: number, data: Record<string, any>[]): IResponsePaging {
+  paging(
+    message: string,
+    totalData: number,
+    totalPage: number,
+    currentPage: number,
+    perPage: number,
+    data: Record<string, any>[],
+  ): IResponsePaging {
     return {
       message: message,
       total_data: totalData,
