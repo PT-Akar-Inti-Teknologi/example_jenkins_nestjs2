@@ -10,6 +10,7 @@ pipeline {
       }
       steps {
         sh 'npm install --force'
+        sh 'npm run test'
       }
     }
 
