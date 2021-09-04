@@ -2,39 +2,43 @@ pipeline {
   agent any
 
   stages {
-    stage('Test cred') {
-      environment {
-        SONAR_CRED = credentials('sonarqube-token')
-      }
-      steps {
-        sh 'printenv'
-      }
-    }
-    // stage('Build') {
-    //   agent {
-    //     docker {
-    //       image 'node:14-alpine'
-    //       reuseNode true
-    //     }
+    // stage('Test cred') {
+    //   environment {
+    //     SONAR_CRED = credentials('sonarqube-token')
     //   }
     //   steps {
-    //     sh 'yarn install'
-    //     sh 'yarn test'
-    //     sh 'yarn test:cov'
+    //     sh 'printenv'
     //   }
     // }
 
-    // stage('Sonarqube docker') {
-    //   agent {
-    //     docker {
-    //       image 'newtmitch/sonar-scanner'
-    //       reuseNode true
-    //     }
-    //   }
-    //   steps {
-    //     sh "/usr/local/bin/sonar-scanner -Dsonar.host.url=http://192.168.1.20:9001 -Dsonar.sources=."
-    //   }
-    // }
+    stage('Build') {
+      agent {
+        docker {
+          image 'node:14-alpine'
+          reuseNode true
+        }
+      }
+      steps {
+        sh 'yarn install'
+        sh 'yarn test'
+        sh 'yarn test:cov'
+      }
+    }
+
+    stage('Sonarqube docker') {
+      agent {
+        docker {
+          image 'newtmitch/sonar-scanner'
+          reuseNode true
+        }
+      }
+      environment {
+        SONAR_TOKEN = credentials('sonarqube-token')
+      }
+      steps {
+        sh '/usr/local/bin/sonar-scanner -Dsonar.host.url=http://192.168.1.20:9001 -Dsonar.sources=. -Dsonar.login=$SONAR_TOKEN'
+      }
+    }
 
     // stage('Sonarqube') {
     //   environment {
