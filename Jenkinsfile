@@ -1,43 +1,29 @@
 pipeline {
   agent any
-  tools {nodejs "node"}
 
   stages {
-    stage('Install dependencies') {
+    stage('Build') {
+      agent {
+        docker {
+          image 'node:14-alpine'
+        }
+      }
       steps {
         sh 'npm install --force'
       }
     }
 
-    stage('Test') {
-      when {
-        branch 'staging'
-      }
-      steps {
-         sh 'npm test'
-      }
-    }
+//     stage('Sonarqube') {
+//       environment {
+//         scannerHome = tool 'sonarqube-scanner'
+//       }
 
-    stage('Test Cov') {
-      when {
-        branch 'staging'
-      }
-      steps {
-         sh 'npm run test:cov'
-      }
-    }
-
-    stage('Sonarqube') {
-      environment {
-        scannerHome = tool 'sonarqube-scanner'
-      }
-
-      steps {
-        withSonarQubeEnv(installationName: 'sonarqube') {
-          sh "${scannerHome}/bin/sonar-scanner"
-        }
-      }
-    }
+//       steps {
+//         withSonarQubeEnv(installationName: 'sonarqube') {
+//           sh "${scannerHome}/bin/sonar-scanner"
+//         }
+//       }
+//     }
 
   }
 }
