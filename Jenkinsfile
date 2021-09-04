@@ -36,7 +36,7 @@ pipeline {
         SONAR_TOKEN = credentials('sonarqube-token')
       }
       steps {
-        sh '/usr/local/bin/sonar-scanner -Dsonar.host.url=http://192.168.1.20:9001 -Dsonar.sources=. -Dsonar.login=$SONAR_TOKEN'
+        sh '/usr/local/bin/sonar-scanner -X -Dsonar.host.url=http://192.168.1.20:9001 -Dsonar.sources=. -Dsonar.login=$SONAR_TOKEN'
       }
     }
 
