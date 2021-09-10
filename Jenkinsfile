@@ -11,13 +11,17 @@ pipeline {
     //   }
     // }
 
+    tools {
+      node 'node-14'
+    }
+
     stage('Build') {
-      agent {
-        docker {
-          image 'node:14-alpine'
-          reuseNode true
-        }
-      }
+      // agent {
+      //   docker {
+      //     image 'node:14-alpine'
+      //     reuseNode true
+      //   }
+      // }
       steps {
         sh 'yarn install'
         sh 'yarn test'
