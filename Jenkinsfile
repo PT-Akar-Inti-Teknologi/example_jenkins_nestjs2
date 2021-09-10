@@ -1,6 +1,10 @@
 pipeline {
   agent any
 
+  tools {
+    node 'node-14'
+  }
+
   stages {
     // stage('Test cred') {
     //   environment {
@@ -10,10 +14,6 @@ pipeline {
     //     sh 'printenv'
     //   }
     // }
-
-    tools {
-      node 'node-14'
-    }
 
     stage('Build') {
       // agent {
