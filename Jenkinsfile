@@ -63,4 +63,12 @@ pipeline {
     }
 
   }
+
+  post {
+    always {
+      emailext body: 'Test jenkins email'
+        subject: 'Test jenkins email subject'
+        to: [developers()]
+    }
+  }
 }
