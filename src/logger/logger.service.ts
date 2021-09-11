@@ -1,7 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import * as DailyRotateFile from 'winston-daily-rotate-file';
 import * as winston from 'winston';
-import { LOGGER_ENV, LOGGER_MAX_FILES, LOGGER_MAX_SIZE, LOGGER_NAME } from 'src/logger/logger.constant';
+import {
+  LOGGER_ENV,
+  LOGGER_MAX_FILES,
+  LOGGER_MAX_SIZE,
+  LOGGER_NAME,
+} from 'src/logger/logger.constant';
 import { ILoggerOptions } from 'src/logger/logger.interface';
 import { ConfigService } from '@nestjs/config';
 import * as moment from 'moment';
@@ -11,7 +16,8 @@ export class LoggerService {
   constructor(private configService: ConfigService) {}
 
   createLogger(): ILoggerOptions {
-    const loggerEnv: boolean = this.configService.get('app.logger.system') || LOGGER_ENV;
+    const loggerEnv: boolean =
+      this.configService.get('app.logger.system') || LOGGER_ENV;
     const timestamp: number = moment().valueOf();
 
     const configTransportDefault: DailyRotateFile = new DailyRotateFile({
@@ -49,7 +55,10 @@ export class LoggerService {
       defaultMeta: {
         requestId: timestamp,
       },
-      format: winston.format.combine(winston.format.timestamp(), winston.format.prettyPrint()),
+      format: winston.format.combine(
+        winston.format.timestamp(),
+        winston.format.prettyPrint(),
+      ),
       transports,
     };
   }
