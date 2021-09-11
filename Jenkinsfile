@@ -66,7 +66,7 @@ pipeline {
 
   post {
     always {
-      emailext body: 'Test jenkins email body', subject: 'Test jenkins email subject', recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']]
+      emailext body: 'Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}', subject: '${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}\n More info at: ${env.BUILD_URL}', recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']]
     }
   }
 }
