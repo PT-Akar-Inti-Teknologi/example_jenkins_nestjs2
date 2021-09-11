@@ -6,22 +6,7 @@ pipeline {
   }
 
   stages {
-    // stage('Test cred') {
-    //   environment {
-    //     SONAR_CRED = credentials('sonarqube-token')
-    //   }
-    //   steps {
-    //     sh 'printenv'
-    //   }
-    // }
-
-    stage('Build') {
-      // agent {
-      //   docker {
-      //     image 'node:14-alpine'
-      //     reuseNode true
-      //   }
-      // }
+    stage('Build & test') {
       steps {
         sh 'yarn install'
         sh 'yarn test'
@@ -29,7 +14,7 @@ pipeline {
       }
     }
 
-    stage('Sonarqube') {
+    stage('Sonarqube analysis') {
       environment {
         scannerHome = tool 'sonarqube-scanner'
       }
@@ -43,10 +28,11 @@ pipeline {
 
     stage('Quality Gate') {
       steps {
-        waitForQualityGate abortPipeline: true
+        timeout(time: 1, unit: 'HOURS') {
+          waitForQualityGate abortPipeline: true
+        }
       }
     }
-
   }
 
   post {
