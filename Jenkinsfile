@@ -14,6 +14,12 @@ pipeline {
       }
     }
 
+    stage('Code Style') {
+      steps {
+        sh 'yarn lint:test'
+      }
+    }
+
     stage('Sonarqube analysis') {
       environment {
         scannerHome = tool 'sonarqube-scanner'
