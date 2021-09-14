@@ -6,7 +6,7 @@ pipeline {
   }
 
   stages {
-    stage('Build & test') {
+    stage('Build & Test') {
       steps {
         sh 'yarn install'
         sh 'yarn test'
@@ -14,13 +14,13 @@ pipeline {
       }
     }
 
-    stage('Code Style') {
+    stage('Coding Standard') {
       steps {
         sh 'yarn lint:test'
       }
     }
 
-    stage('Sonarqube analysis') {
+    stage('Sonarqube Analysis') {
       environment {
         scannerHome = tool 'sonarqube-scanner'
       }
