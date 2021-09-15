@@ -1,10 +1,6 @@
 pipeline {
   agent any
 
-  tools {
-    nodejs 'node-14'
-  }
-
   stages {
     stage('Build & Test') {
       agent {
@@ -21,6 +17,12 @@ pipeline {
     }
 
     stage('Coding Standard') {
+      agent {
+        docker {
+          image 'node:14.17.0-alpine'
+          reuseNode true
+        }
+      }
       steps {
         sh 'yarn lint:test'
       }
