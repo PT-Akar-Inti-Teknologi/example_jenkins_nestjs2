@@ -29,10 +29,15 @@ pipeline {
     }
 
     stage('Sonarqube Analysis') {
+      agent {
+        docker {
+          image 'node:14.17.0-alpine'
+          reuseNode true
+        }
+      }
       environment {
         scannerHome = tool 'sonarqube-scanner'
       }
-
       steps {
         withSonarQubeEnv(installationName: 'sonarqube') {
           sh '$scannerHome/bin/sonar-scanner'
